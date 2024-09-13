@@ -776,15 +776,13 @@ SiSHandleSiSDirectCommand(xSiSCtrlCommandReply *sdcbuf)
 static int
 SiSUSBProcSiSCtrlQueryVersion(ClientPtr client)
 {
-    xSiSCtrlQueryVersionReply	  rep;
-    register int		  n;
-
     REQUEST_SIZE_MATCH(xSiSCtrlQueryVersionReq);
-    rep.type = X_Reply;
-    rep.length = 0;
-    rep.sequenceNumber = client->sequence;
-    rep.majorVersion = SISCTRL_MAJOR_VERSION;
-    rep.minorVersion = SISCTRL_MINOR_VERSION;
+    xSiSCtrlQueryVersionReply rep = {
+        .type = X_Reply,
+        .sequenceNumber = client->sequence,
+        .majorVersion = SISCTRL_MAJOR_VERSION,
+        .minorVersion = SISCTRL_MINOR_VERSION,
+    };
     if(client->swapped) {
         swaps(&rep.sequenceNumber);
         swapl(&rep.length);
@@ -802,7 +800,6 @@ SiSUSBProcSiSCtrlCommand(ClientPtr client)
     xSiSCtrlCommandReply rep;
     ExtensionEntry 	 *myext;
     xSiSCtrlScreenTable  *myctrl;
-    register int	 n;
     int 		 i, ret;
 
     REQUEST_SIZE_MATCH(xSiSCtrlCommandReq);
@@ -865,7 +862,6 @@ static int
 SiSUSBSProcSiSCtrlQueryVersion(ClientPtr client)
 {
     REQUEST(xSiSCtrlQueryVersionReq);
-    register int n;
     swaps(&stuff->length);
     REQUEST_SIZE_MATCH(xSiSCtrlQueryVersionReq);
     return SiSUSBProcSiSCtrlQueryVersion(client);
@@ -875,7 +871,6 @@ static int
 SiSUSBSProcSiSCtrlCommand(ClientPtr client)
 {
     REQUEST(xSiSCtrlCommandReq);
-    register int n;
     int i;
     swaps(&stuff->length);
     swapl(&stuff->screen);

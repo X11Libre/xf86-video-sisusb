@@ -755,17 +755,13 @@ SiS_SetCRT1ModeRegs(SiS_Private *SiS_Pr, USHORT ModeNo, USHORT ModeIdIndex,
 			USHORT RefreshRateTableIndex)
 {
   USHORT data,infoflag=0,modeflag;
-  USHORT resindex,xres;
 
   if(SiS_Pr->UseCustomMode) {
      modeflag = SiS_Pr->CModeFlag;
      infoflag = SiS_Pr->CInfoFlag;
-     xres = SiS_Pr->CHDisplay;
   } else {
-     resindex = SiS_Pr->SiS_EModeIDTable[ModeIdIndex].Ext_RESINFO;
      modeflag = SiS_Pr->SiS_EModeIDTable[ModeIdIndex].Ext_ModeFlag;
      infoflag = SiS_Pr->SiS_RefIndex[RefreshRateTableIndex].Ext_InfoFlag;
-     xres = SiS_Pr->SiS_ModeResInfo[resindex].HTotal;
   }
 
   /* Disable DPMS */
