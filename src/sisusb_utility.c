@@ -280,7 +280,6 @@ SiSHandleSiSDirectCommand(xSiSCtrlCommandReply *sdcbuf)
    ScrnInfoPtr pScrn = xf86Screens[sdcbuf->screen];
    SISUSBPtr pSiSUSB = SISUSBPTR(pScrn);
    SISUSBPortPrivPtr pPriv = NULL;
-   int i;
    ULong j;
 
    if(sdcbuf->sdc_id != SDC_ID) return BadMatch;
@@ -290,7 +289,7 @@ SiSHandleSiSDirectCommand(xSiSCtrlCommandReply *sdcbuf)
    }
 
    j = sdcbuf->sdc_command;
-   for(i = 0; i < SDC_NUM_PARM_RESULT; i++) {
+   for(int i = 0; i < SDC_NUM_PARM_RESULT; i++) {
       j += sdcbuf->sdc_parm[i];
    }
 
@@ -871,13 +870,12 @@ static int
 SiSUSBSProcSiSCtrlCommand(ClientPtr client)
 {
     REQUEST(xSiSCtrlCommandReq);
-    int i;
     swaps(&stuff->length);
     swapl(&stuff->screen);
     swapl(&stuff->sdc_id);
     swapl(&stuff->sdc_command);
     swapl(&stuff->sdc_result_header);
-    for(i = 0; i < SDC_NUM_PARM_RESULT; i++) {
+    for(int i = 0; i < SDC_NUM_PARM_RESULT; i++) {
         swapl(&stuff->sdc_parm[i]);
         swapl(&stuff->sdc_result[i]);
     }

@@ -716,9 +716,9 @@ SISUSBPreInit(ScrnInfoPtr pScrn, int flags)
     SISUSBPtr pSiSUSB;
     MessageType from;
     UChar srlockReg, crlockReg;
-    unsigned int i;
     int pix24flags;
     ClockRangePtr clockRanges;
+    int numModes = 0;
 
     if(flags & PROBE_DETECT) {
        return TRUE;
@@ -837,16 +837,16 @@ SISUSBPreInit(ScrnInfoPtr pScrn, int flags)
 
        sisusbfb_info *mysisfbinfo = NULL;
        CARD32     sisfbinfosize = 0;
-       int        fd, i;
+       int        fd;
        char       name[16];
 
-       i=0;
+       int fb_idx=0;
        do {
 
-	  if(i <= 7) {
-             sprintf(name, "/dev/fb%1d", i);
+	  if(fb_idx <= 7) {
+             sprintf(name, "/dev/fb%1d", fb_idx);
 	  } else {
-	     sprintf(name, "/dev/fb/%1d", i-8);
+	     sprintf(name, "/dev/fb/%1d", fb_idx-8);
 	  }
 
           if((fd = open(name, O_RDONLY)) != -1) {
@@ -892,8 +892,8 @@ SISUSBPreInit(ScrnInfoPtr pScrn, int flags)
 	     }
 	     close (fd);
           }
-	  i++;
-       } while((i <= 15) && (!pSiSUSB->sisfbfound));
+	  fb_idx++;
+       } while((fb_idx <= 15) && (!pSiSUSB->sisfbfound));
 
        if(pSiSUSB->sisfbfound) {
           strncpy(pSiSUSB->sisfbdevname, name, 15);
@@ -1280,25 +1280,23 @@ SISUSBPreInit(ScrnInfoPtr pScrn, int flags)
      * Assuming min pitch 256, min height 128
      */
     {
-       int minpitch, maxpitch, minheight, maxheight;
+       int minpitch = 256;
+       int minheight = 128;
+       int maxpitch = 4088;
+       int maxheight = 4096;
 
-       minpitch = 256;
-       minheight = 128;
-       maxpitch = 4088;
-       maxheight = 4096;
-
-       i = xf86ValidateModes(pScrn, pScrn->monitor->Modes,
+       numModes = xf86ValidateModes(pScrn, pScrn->monitor->Modes,
                       pScrn->display->modes, clockRanges, NULL,
                       minpitch, maxpitch,
                       pScrn->bitsPerPixel * 8,
-		      minheight, maxheight,
+                      minheight, maxheight,
                       pScrn->display->virtualX,
                       pScrn->display->virtualY,
                       pSiSUSB->maxxfbmem,
                       LOOKUP_BEST_REFRESH);
     }
 
-    if(i == -1) {
+    if(numModes == -1) {
        SISUSBErrorLog(pScrn, "xf86ValidateModes() error\n");
        sisusbRestoreExtRegisterLock(pSiSUSB,srlockReg,crlockReg);
        SISUSBFreeRec(pScrn);
@@ -1322,7 +1320,7 @@ SISUSBPreInit(ScrnInfoPtr pScrn, int flags)
     /* Prune the modes marked as invalid */
     xf86PruneDriverModes(pScrn);
 
-    if(i == 0 || pScrn->modes == NULL) {
+    if(numModes == 0 || pScrn->modes == NULL) {
        SISUSBErrorLog(pScrn, "No valid modes found - check VertRefresh/HorizSync\n");
        sisusbRestoreExtRegisterLock(pSiSUSB,srlockReg,crlockReg);
        SISUSBFreeRec(pScrn);
@@ -2449,13 +2447,12 @@ SiSUSBPostSetMode(ScrnInfoPtr pScrn, SISUSBRegPtr sisReg)
     pSiSUSB->MiscFlags &= ~MISC_TVNTSC1024;
 
     {
-       int i;
 #ifdef SISVRAMQ
        /* Re-Enable command queue */
        SiSUSBEnableTurboQueue(pScrn);
 #endif
        /* Get HWCursor register contents for backup */
-       for(i = 0; i < 16; i++) {
+       for(int i = 0; i < 16; i++) {
           pSiSUSB->HWCursorBackup[i] = SIS_MMIO_IN32(pSiSUSB, pSiSUSB->IOBase, 0x8500 + (i << 2));
        }
     }
