@@ -267,9 +267,8 @@ sisutil_prepare_string(xSiSCtrlCommandReply *sdcbuf, char *mystring)
    int slen = 0;
    sdcbuf->sdc_buffer[0] = 0;
    if(mystring) {
-      slen = strlen(mystring);
-      if(slen > 31) slen = 31;
-      strncpy(&sdcbuf->sdc_buffer[0], mystring, slen);
+      slen = min(31, strlen(mystring));
+      memcpy(&sdcbuf->sdc_buffer[0], mystring, slen);
       sdcbuf->sdc_buffer[slen] = 0;
    }
    sdcbuf->sdc_result[0] = slen;
