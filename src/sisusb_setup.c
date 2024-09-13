@@ -46,7 +46,7 @@ sis315USBSetup(ScrnInfoPtr pScrn)
     int busDDR[4]  = {32, 32,  64,  64};
     int busDDRA[4] = {64+32, 64+32 , (64+32)*2, (64+32)*2};
     unsigned int config, config1, config2, sr3a, cr5f;
-    char *dramTypeStr315[] = {
+    const char *dramTypeStr315[] = {
         "Single channel 1 rank SDR SDRAM",
         "Single channel 1 rank SDR SGRAM",
         "Single channel 1 rank DDR SDRAM",
@@ -55,14 +55,14 @@ sis315USBSetup(ScrnInfoPtr pScrn)
         "Single channel 2 rank SDR SGRAM",
         "Single channel 2 rank DDR SDRAM",
         "Single channel 2 rank DDR SGRAM",
-	"Asymmetric SDR SDRAM",
-	"Asymmetric SDR SGRAM",
-	"Asymmetric DDR SDRAM",
-	"Asymmetric DDR SGRAM",
-	"Dual channel SDR SDRAM",
-	"Dual channel SDR SGRAM",
-	"Dual channel DDR SDRAM",
-	"Dual channel DDR SGRAM"
+        "Asymmetric SDR SDRAM",
+        "Asymmetric SDR SGRAM",
+        "Asymmetric DDR SDRAM",
+        "Asymmetric DDR SGRAM",
+        "Dual channel SDR SDRAM",
+        "Dual channel SDR SGRAM",
+        "Dual channel DDR SDRAM",
+        "Dual channel DDR SGRAM"
     };
 
     inSISIDXREG(pSiSUSB, SISSR, 0x14, config);
