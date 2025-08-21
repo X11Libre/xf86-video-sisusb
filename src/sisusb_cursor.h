@@ -38,10 +38,10 @@
  * 20000000 = 32(1) / 16(1) bit RGB
  * 10000000 = "ghost"(1) - Alpha Blend(0)
  */
- 
+
 #define sisusbGetCursorStatus \
   SIS_MMIO_IN32(pSiSUSB, pSiSUSB->IOBase, CS(0)) & 0x40000000;
-  
+
 #define sisusbSetCursorStatus(status) \
   pSiSUSB->HWCursorBackup[0] &= 0xbfffffff; \
   pSiSUSB->HWCursorBackup[0] |= status; \
@@ -55,7 +55,7 @@
   SIS_MMIO_OUT32(pSiSUSB, pSiSUSB->IOBase, CS(0), pSiSUSB->HWCursorBackup[0]); \
   SIS_MMIO_OUT32(pSiSUSB, pSiSUSB->IOBase, CS(3), pSiSUSB->HWCursorBackup[3]); \
   SIS_MMIO_OUT32(pSiSUSB, pSiSUSB->IOBase, CS(4), pSiSUSB->HWCursorBackup[4]);
-  
+
 #define sisusbEnableHWARGBCursor()\
   pSiSUSB->HWCursorBackup[0] &= 0x0FFFFFFF; \
   pSiSUSB->HWCursorBackup[0] |= 0xE0000000; \
@@ -81,7 +81,7 @@
   SIS_MMIO_OUT32(pSiSUSB, pSiSUSB->IOBase, CS(0), pSiSUSB->HWCursorBackup[0]); \
   SIS_MMIO_OUT32(pSiSUSB, pSiSUSB->IOBase, CS(3), pSiSUSB->HWCursorBackup[3]); \
   SIS_MMIO_OUT32(pSiSUSB, pSiSUSB->IOBase, CS(4), pSiSUSB->HWCursorBackup[4]);
-  
+
 #define sisusbSetCursorBGColor(color) \
   SIS_MMIO_OUT32(pSiSUSB, pSiSUSB->IOBase, CS(1), (color)); \
   pSiSUSB->HWCursorBackup[1] = color;
