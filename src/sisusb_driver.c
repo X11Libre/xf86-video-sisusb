@@ -76,8 +76,6 @@ static SymTabRec SISUSBChipsets[] = {
     { -1,              NULL }
 };
 
-#ifdef XFree86LOADER
-
 static MODULESETUPPROTO(sisusbSetup);
 
 static XF86ModuleVersionInfo sisVersRec =
@@ -110,8 +108,6 @@ sisusbSetup(pointer module, pointer opts, int *errmaj, int *errmin)
     if(errmaj) *errmaj = LDR_ONCEONLY;
     return NULL;
 }
-
-#endif /* XFree86LOADER */
 
 /* Mandatory */
 static void
