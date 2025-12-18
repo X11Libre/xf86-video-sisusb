@@ -29,10 +29,7 @@
  * Author: 	Thomas Winischhofer <thomas@winischhofer.net>
  *
  */
-
-#ifdef HAVE_CONFIG_H
 #include "config.h"
-#endif
 
 #include "sisusb_init.h"
 
