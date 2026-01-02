@@ -1564,7 +1564,7 @@ SISUSBBridgeRestore(ScrnInfoPtr pScrn)
 
 /* Our generic BlockHandler for Xv */
 static void
-SISUSBBlockHandler(BLOCKHANDLER_ARGS_DECL)
+SISUSBBlockHandler(ScreenPtr pScreen, pointer pTimeout)
 {
     ScrnInfoPtr pScrn = xf86ScreenToScrn(pScreen);
     SISUSBPtr pSiSUSB = SISUSBPTR(pScrn);
@@ -1594,7 +1594,7 @@ SISUSBBlockHandler(BLOCKHANDLER_ARGS_DECL)
     SISUSBDoRefreshArea(pScrn);
 
     pScreen->BlockHandler = pSiSUSB->BlockHandler;
-    (*pScreen->BlockHandler) (BLOCKHANDLER_ARGS);
+    (*pScreen->BlockHandler) (pScreen, pTimeout);
     pScreen->BlockHandler = SISUSBBlockHandler;
 
     if(pSiSUSB->VideoTimerCallback) {

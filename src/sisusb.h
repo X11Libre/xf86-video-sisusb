@@ -96,8 +96,6 @@
 
 #include "fb.h"
 
-#include "compat-api.h"
-
 /* Our #includes: Require the arch/platform dependent #defines above */
 
 #include "sisusb_osdef.h"
