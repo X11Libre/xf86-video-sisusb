@@ -94,15 +94,15 @@ static XF86ModuleVersionInfo sisVersRec =
 
 _X_EXPORT XF86ModuleData sisusbModuleData = { &sisVersRec, sisusbSetup, NULL };
 
-pointer
-sisusbSetup(pointer module, pointer opts, int *errmaj, int *errmin)
+void*
+sisusbSetup(void *module, void *opts, int *errmaj, int *errmin)
 {
     static Bool setupDone = FALSE;
 
     if(!setupDone) {
        setupDone = TRUE;
        xf86AddDriver(&SISUSB, module, HaveDriverFuncs);
-       return (pointer)TRUE;
+       return (void*)TRUE;
     }
 
     if(errmaj) *errmaj = LDR_ONCEONLY;
@@ -117,7 +117,7 @@ SISUSBIdentify(int flags)
 }
 
 static Bool
-SISUSBDriverFunc(ScrnInfoPtr pScrn, xorgDriverFuncOp op, pointer ptr)
+SISUSBDriverFunc(ScrnInfoPtr pScrn, xorgDriverFuncOp op, void *ptr)
 {
     xorgHWFlags *flag;
 
@@ -1564,7 +1564,7 @@ SISUSBBridgeRestore(ScrnInfoPtr pScrn)
 
 /* Our generic BlockHandler for Xv */
 static void
-SISUSBBlockHandler(ScreenPtr pScreen, pointer pTimeout)
+SISUSBBlockHandler(ScreenPtr pScreen, void *pTimeout)
 {
     ScrnInfoPtr pScrn = xf86ScreenToScrn(pScreen);
     SISUSBPtr pSiSUSB = SISUSBPTR(pScrn);
