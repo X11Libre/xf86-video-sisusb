@@ -35,18 +35,18 @@
 #include "sisusb_videostr.h"
 
 static 		XF86VideoAdaptorPtr SISUSBSetupImageVideo(ScreenPtr);
-static int 	SISUSBSetPortAttribute(ScrnInfoPtr, Atom, INT32, pointer);
-static int 	SISUSBGetPortAttribute(ScrnInfoPtr, Atom ,INT32 *, pointer);
+static int 	SISUSBSetPortAttribute(ScrnInfoPtr, Atom, INT32, void*);
+static int 	SISUSBGetPortAttribute(ScrnInfoPtr, Atom ,INT32 *, void*);
 static void 	SISUSBQueryBestSize(ScrnInfoPtr, Bool, short, short, short,
-			short, unsigned int *,unsigned int *, pointer);
+			short, unsigned int *,unsigned int *, void*);
 static int 	SISUSBQueryImageAttributes(ScrnInfoPtr,
     			int, UShort *, UShort *, int *, int *);
-static void 	SISUSBStopVideo(ScrnInfoPtr, pointer, Bool);
+static void 	SISUSBStopVideo(ScrnInfoPtr, void*, Bool);
 void		SISUSBSetPortDefaults(ScrnInfoPtr pScrn, SISUSBPortPrivPtr pPriv);
 #ifdef SIS_ENABLEXV
 static int 	SISUSBPutImage( ScrnInfoPtr,
     			short, short, short, short, short, short, short, short,
-    			int, UChar *, short, short, Bool, RegionPtr, pointer);
+    			int, UChar *, short, short, Bool, RegionPtr, void*);
 static void 	SISUSBVideoTimerCallback(ScrnInfoPtr pScrn, Time now);
 static void     SISUSBInitOffscreenImages(ScreenPtr pScrn);
 static FBLinearPtr SISUSBAllocateOverlayMemory(ScrnInfoPtr pScrn, FBLinearPtr linear, int size);

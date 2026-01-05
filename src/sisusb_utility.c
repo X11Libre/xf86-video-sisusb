@@ -937,7 +937,7 @@ SiSUSBCtrlExtInit(ScrnInfoPtr pScrn)
 	 return;
       }
 
-      myext->extPrivate = (pointer)myctrl;
+      myext->extPrivate = myctrl;
 
       myctrl->maxscreens = SISCTRL_MAX_SCREENS;
       myctrl->version_major = version = SISCTRL_MAJOR_VERSION;

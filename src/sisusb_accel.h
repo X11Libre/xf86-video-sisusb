@@ -276,7 +276,7 @@
 #define SiSUSBSetupSRCDSTBase(srcbase,dstbase) \
       { \
          CARD32 ttt = SiSUSBGetSwWP(); \
-	 pointer tt = (char *)pSiSUSB->cmdQueueBase + ttt; \
+         void *tt = (char *)pSiSUSB->cmdQueueBase + ttt; \
          SIS_WQINDEX(0) = (CARD32)(SISUSB_SPKC_HEADER + SRC_ADDR); \
          SIS_WQINDEX(1) = (CARD32)(srcbase); 			\
 	 SIS_WQINDEX(2) = (CARD32)(SISUSB_SPKC_HEADER + DST_ADDR); \
@@ -288,7 +288,7 @@
 #define SiSUSBSetupSRCDSTXY(sx,sy,dx,dy) \
       { \
          CARD32 ttt = SiSUSBGetSwWP(); \
-	 pointer tt = (char *)pSiSUSB->cmdQueueBase + ttt; \
+         void *tt = (char *)pSiSUSB->cmdQueueBase + ttt; \
          SIS_WQINDEX(0) = (CARD32)(SISUSB_SPKC_HEADER + SRC_Y); 	\
          SIS_WQINDEX(1) = (CARD32)(((sx)<<16) | (sy));		\
 	 SIS_WQINDEX(2) = (CARD32)(SISUSB_SPKC_HEADER + DST_Y); 	\
@@ -300,7 +300,7 @@
 #define SiSUSBSetupDSTXYRect(x,y,w,h) \
       { \
          CARD32 ttt = SiSUSBGetSwWP(); \
-	 pointer tt = (char *)pSiSUSB->cmdQueueBase + ttt; \
+         void *tt = (char *)pSiSUSB->cmdQueueBase + ttt; \
          SIS_WQINDEX(0) = (CARD32)(SISUSB_SPKC_HEADER + DST_Y); 		\
          SIS_WQINDEX(1) = (CARD32)(((x)<<16) | (y));	 		\
 	 SIS_WQINDEX(2) = (CARD32)(SISUSB_SPKC_HEADER + RECT_WIDTH); 	\
@@ -312,7 +312,7 @@
 #define SiSUSBSetupSRCPitchDSTRect(pitch,x,y) \
       { \
          CARD32 ttt = SiSUSBGetSwWP(); \
-	 pointer tt = (char *)pSiSUSB->cmdQueueBase + ttt; \
+         void *tt = (char *)pSiSUSB->cmdQueueBase + ttt; \
          SIS_WQINDEX(0) = (CARD32)(SISUSB_SPKC_HEADER + SRC_PITCH); 	\
          SIS_WQINDEX(1) = (CARD32)(pitch);				\
 	 SIS_WQINDEX(2) = (CARD32)(SISUSB_SPKC_HEADER + DST_PITCH); 	\
@@ -324,7 +324,7 @@
 #define SiSUSBSetupSRCBase(base) \
       { \
          CARD32 ttt = SiSUSBGetSwWP(); \
-	 pointer tt = (char *)pSiSUSB->cmdQueueBase + ttt; \
+         void *tt = (char *)pSiSUSB->cmdQueueBase + ttt; \
          SIS_WQINDEX(0) = (CARD32)(SISUSB_SPKC_HEADER + SRC_ADDR); 	\
          SIS_WQINDEX(1) = (CARD32)(base); 				\
          SiSUSBNILandUpdateSWQueue \
@@ -333,7 +333,7 @@
 #define SiSUSBSetupSRCPitch(pitch) \
       { \
          CARD32 ttt = SiSUSBGetSwWP(); \
-	 pointer tt = (char *)pSiSUSB->cmdQueueBase + ttt; \
+         void *tt = (char *)pSiSUSB->cmdQueueBase + ttt; \
          SIS_WQINDEX(0) = (CARD32)(SISUSB_SPKC_HEADER + SRC_PITCH); 	\
          SIS_WQINDEX(1) = (CARD32)(pitch);				\
          SiSUSBNILandUpdateSWQueue \
@@ -342,7 +342,7 @@
 #define SiSUSBSetupSRCXY(x,y) \
       { \
          CARD32 ttt = SiSUSBGetSwWP(); \
-	 pointer tt = (char *)pSiSUSB->cmdQueueBase + ttt; \
+         void *tt = (char *)pSiSUSB->cmdQueueBase + ttt; \
          SIS_WQINDEX(0) = (CARD32)(SISUSB_SPKC_HEADER + SRC_Y); 	\
          SIS_WQINDEX(1) = (CARD32)(((x)<<16) | (y));		\
          SiSUSBNILandUpdateSWQueue \
@@ -351,7 +351,7 @@
 #define SiSUSBSetupDSTBase(base) \
       { \
          CARD32 ttt = SiSUSBGetSwWP(); \
-	 pointer tt = (char *)pSiSUSB->cmdQueueBase + ttt; \
+         void *tt = (char *)pSiSUSB->cmdQueueBase + ttt; \
          SIS_WQINDEX(0) = (CARD32)(SISUSB_SPKC_HEADER + DST_ADDR); 	\
          SIS_WQINDEX(1) = (CARD32)(base);				\
          SiSUSBNILandUpdateSWQueue \
@@ -360,7 +360,7 @@
 #define SiSUSBSetupDSTXY(x,y) \
       { \
          CARD32 ttt = SiSUSBGetSwWP(); \
-	 pointer tt = (char *)pSiSUSB->cmdQueueBase + ttt; \
+         void *tt = (char *)pSiSUSB->cmdQueueBase + ttt; \
          SIS_WQINDEX(0) = (CARD32)(SISUSB_SPKC_HEADER + DST_Y); 	\
          SIS_WQINDEX(1) = (CARD32)(((x)<<16) | (y));	 	\
          SiSUSBNILandUpdateSWQueue \
@@ -369,7 +369,7 @@
 #define SiSUSBSetupDSTRect(x,y) \
       { \
          CARD32 ttt = SiSUSBGetSwWP(); \
-	 pointer tt = (char *)pSiSUSB->cmdQueueBase + ttt; \
+         void *tt = (char *)pSiSUSB->cmdQueueBase + ttt; \
          SIS_WQINDEX(0) = (CARD32)(SISUSB_SPKC_HEADER + DST_PITCH); 	\
          SIS_WQINDEX(1) = (CARD32)(((y)<<16) | (x));		\
          SiSUSBNILandUpdateSWQueue \
@@ -378,7 +378,7 @@
 #define SiSUSBSetupDSTRectBurstHeader(x,y,reg,num) \
       { \
          CARD32 ttt = SiSUSBGetSwWP(); \
-	 pointer tt = (char *)pSiSUSB->cmdQueueBase + ttt; \
+         void *tt = (char *)pSiSUSB->cmdQueueBase + ttt; \
 	 SIS_WQINDEX(0) = (CARD32)(SISUSB_SPKC_HEADER + DST_PITCH);	\
          SIS_WQINDEX(1) = (CARD32)(((y)<<16) | (x));			\
 	 SIS_WQINDEX(2) = (CARD32)(SISUSB_BURST_HEADER0 + reg); 		\
@@ -393,7 +393,7 @@
 #define SiSUSBSetupPATFGDSTRect(color,x,y) \
       { \
          CARD32 ttt = SiSUSBGetSwWP(); \
-	 pointer tt = (char *)pSiSUSB->cmdQueueBase + ttt; \
+         void *tt = (char *)pSiSUSB->cmdQueueBase + ttt; \
          SIS_WQINDEX(0) = (CARD32)(SISUSB_SPKC_HEADER + PAT_FGCOLOR); 	\
          SIS_WQINDEX(1) = (CARD32)(color);	 			\
 	 SIS_WQINDEX(2) = (CARD32)(SISUSB_SPKC_HEADER + DST_PITCH); 	\
@@ -405,7 +405,7 @@
 #define SiSUSBSetupSRCFGDSTRect(color,x,y) \
       { \
          CARD32 ttt = SiSUSBGetSwWP(); \
-	 pointer tt = (char *)pSiSUSB->cmdQueueBase + ttt; \
+         void *tt = (char *)pSiSUSB->cmdQueueBase + ttt; \
          SIS_WQINDEX(0) = (CARD32)(SISUSB_SPKC_HEADER + SRC_FGCOLOR); 	\
          SIS_WQINDEX(1) = (CARD32)(color);	 			\
 	 SIS_WQINDEX(2) = (CARD32)(SISUSB_SPKC_HEADER + DST_PITCH); 	\
@@ -417,7 +417,7 @@
 #define SiSUSBSetupRectSRCPitch(w,h,pitch) \
       { \
          CARD32 ttt = SiSUSBGetSwWP(); \
-	 pointer tt = (char *)pSiSUSB->cmdQueueBase + ttt; \
+         void *tt = (char *)pSiSUSB->cmdQueueBase + ttt; \
          SIS_WQINDEX(0) = (CARD32)(SISUSB_SPKC_HEADER + RECT_WIDTH); 	\
          SIS_WQINDEX(1) = (CARD32)(((h)<<16) | (w));			\
 	 SIS_WQINDEX(2) = (CARD32)(SISUSB_SPKC_HEADER + SRC_PITCH); 	\
@@ -429,7 +429,7 @@
 #define SiSUSBSetupRect(w,h) \
       { \
          CARD32 ttt = SiSUSBGetSwWP(); \
-	 pointer tt = (char *)pSiSUSB->cmdQueueBase + ttt; \
+         void *tt = (char *)pSiSUSB->cmdQueueBase + ttt; \
          SIS_WQINDEX(0) = (CARD32)(SISUSB_SPKC_HEADER + RECT_WIDTH); 	\
          SIS_WQINDEX(1) = (CARD32)(((h)<<16) | (w));			\
          SiSUSBNILandUpdateSWQueue \
@@ -438,7 +438,7 @@
 #define SiSUSBSetupPATFG(color) \
       { \
          CARD32 ttt = SiSUSBGetSwWP(); \
-	 pointer tt = (char *)pSiSUSB->cmdQueueBase + ttt; \
+         void *tt = (char *)pSiSUSB->cmdQueueBase + ttt; \
          SIS_WQINDEX(0) = (CARD32)(SISUSB_SPKC_HEADER + PAT_FGCOLOR); 	\
          SIS_WQINDEX(1) = (CARD32)(color);	 			\
          SiSUSBNILandUpdateSWQueue \
@@ -447,7 +447,7 @@
 #define SiSUSBSetupPATBG(color) \
       { \
          CARD32 ttt = SiSUSBGetSwWP(); \
-	 pointer tt = (char *)pSiSUSB->cmdQueueBase + ttt; \
+         void *tt = (char *)pSiSUSB->cmdQueueBase + ttt; \
          SIS_WQINDEX(0) = (CARD32)(SISUSB_SPKC_HEADER + PAT_BGCOLOR);	\
          SIS_WQINDEX(1) = (CARD32)(color);	 			\
          SiSUSBNILandUpdateSWQueue \
@@ -456,7 +456,7 @@
 #define SiSUSBSetupSRCFG(color) \
       { \
          CARD32 ttt = SiSUSBGetSwWP(); \
-	 pointer tt = (char *)pSiSUSB->cmdQueueBase + ttt; \
+         void *tt = (char *)pSiSUSB->cmdQueueBase + ttt; \
          SIS_WQINDEX(0) = (CARD32)(SISUSB_SPKC_HEADER + SRC_FGCOLOR);	\
          SIS_WQINDEX(1) = (CARD32)(color);	 			\
          SiSUSBNILandUpdateSWQueue \
@@ -465,7 +465,7 @@
 #define SiSUSBSetupSRCBG(color) \
       { \
          CARD32 ttt = SiSUSBGetSwWP(); \
-	 pointer tt = (char *)pSiSUSB->cmdQueueBase + ttt; \
+         void *tt = (char *)pSiSUSB->cmdQueueBase + ttt; \
          SIS_WQINDEX(0) = (CARD32)(SISUSB_SPKC_HEADER + SRC_BGCOLOR);	\
          SIS_WQINDEX(1) = (CARD32)(color);	 			\
          SiSUSBNILandUpdateSWQueue \
@@ -474,7 +474,7 @@
 #define SiSUSBSetupSRCTrans(color) \
       { \
          CARD32 ttt = SiSUSBGetSwWP(); \
-	 pointer tt = (char *)pSiSUSB->cmdQueueBase + ttt; \
+         void *tt = (char *)pSiSUSB->cmdQueueBase + ttt; \
          SIS_WQINDEX(0) = (CARD32)(SISUSB_SPKC_HEADER + TRANS_SRC_KEY_HIGH);	\
          SIS_WQINDEX(1) = (CARD32)(color);	 				\
 	 SIS_WQINDEX(2) = (CARD32)(SISUSB_SPKC_HEADER + TRANS_SRC_KEY_LOW);	\
@@ -486,7 +486,7 @@
 #define SiSUSBSetupDSTTrans(color) \
       { \
          CARD32 ttt = SiSUSBGetSwWP(); \
-	 pointer tt = (char *)pSiSUSB->cmdQueueBase + ttt; \
+         void *tt = (char *)pSiSUSB->cmdQueueBase + ttt; \
          SIS_WQINDEX(0) = (CARD32)(SISUSB_SPKC_HEADER + TRANS_DST_KEY_HIGH);	\
          SIS_WQINDEX(1) = (CARD32)(color);	 				\
 	 SIS_WQINDEX(2) = (CARD32)(SISUSB_SPKC_HEADER + TRANS_DST_KEY_LOW);	\
@@ -498,7 +498,7 @@
 #define SiSUSBSetupMONOPAT(p0,p1) \
       { \
          CARD32 ttt = SiSUSBGetSwWP(); \
-	 pointer tt = (char *)pSiSUSB->cmdQueueBase + ttt; \
+         void *tt = (char *)pSiSUSB->cmdQueueBase + ttt; \
          SIS_WQINDEX(0) = (CARD32)(SISUSB_SPKC_HEADER + MONO_MASK);		\
          SIS_WQINDEX(1) = (CARD32)(p0);	 				\
 	 SIS_WQINDEX(2) = (CARD32)(SISUSB_SPKC_HEADER + MONO_MASK + 4);	\
@@ -510,7 +510,7 @@
 #define SiSUSBSetupClip(left,top,right,bottom) \
       { \
          CARD32 ttt = SiSUSBGetSwWP(); \
-	 pointer tt = (char *)pSiSUSB->cmdQueueBase + ttt; \
+         void *tt = (char *)pSiSUSB->cmdQueueBase + ttt; \
          SIS_WQINDEX(0) = (CARD32)(SISUSB_SPKC_HEADER + LEFT_CLIP);	\
          SIS_WQINDEX(1) = (CARD32)(((left) & 0xFFFF) | ((top)<<16));   	\
 	 SIS_WQINDEX(2) = (CARD32)(SISUSB_SPKC_HEADER + RIGHT_CLIP);	\
@@ -522,7 +522,7 @@
 #define SiSUSBSetupDSTBaseDoCMD(base) \
       { \
          CARD32 ttt = SiSUSBGetSwWP(); \
-	 pointer tt = (char *)pSiSUSB->cmdQueueBase + ttt; \
+         void *tt = (char *)pSiSUSB->cmdQueueBase + ttt; \
 	 SIS_WQINDEX(0) = (CARD32)(SISUSB_SPKC_HEADER + DST_ADDR); 	\
          SIS_WQINDEX(1) = (CARD32)(base);				\
          SIS_WQINDEX(2) = (CARD32)(SISUSB_SPKC_HEADER + COMMAND_READY);	\
@@ -535,7 +535,7 @@
 #define SiSUSBSetRectDoCMD(w,h) \
       { \
          CARD32 ttt = SiSUSBGetSwWP(); \
-	 pointer tt = (char *)pSiSUSB->cmdQueueBase + ttt; \
+         void *tt = (char *)pSiSUSB->cmdQueueBase + ttt; \
 	 SIS_WQINDEX(0) = (CARD32)(SISUSB_SPKC_HEADER + RECT_WIDTH); 	\
          SIS_WQINDEX(1) = (CARD32)(((h)<<16) | (w));	 		\
          SIS_WQINDEX(2) = (CARD32)(SISUSB_SPKC_HEADER + COMMAND_READY);	\
@@ -551,7 +551,7 @@
 #define SiSUSBDoCMD \
       { \
          CARD32 ttt = SiSUSBGetSwWP(); \
-	 pointer tt = (char *)pSiSUSB->cmdQueueBase + ttt; \
+         void *tt = (char *)pSiSUSB->cmdQueueBase + ttt; \
          SIS_WQINDEX(0) = (CARD32)(SISUSB_SPKC_HEADER + COMMAND_READY);	\
          SIS_WQINDEX(1) = (CARD32)(pSiSUSB->CommandReg); 			\
 	 SIS_WQINDEX(2) = (CARD32)(SISUSB_NIL_CMD); 			\
@@ -566,7 +566,7 @@
 #define SiSUSBSetupX0Y0X1Y1(x1,y1,x2,y2) \
       { \
          CARD32 ttt = SiSUSBGetSwWP(); \
-	 pointer tt = (char *)pSiSUSB->cmdQueueBase + ttt; \
+         void *tt = (char *)pSiSUSB->cmdQueueBase + ttt; \
          SIS_WQINDEX(0) = (CARD32)(SISUSB_SPKC_HEADER + LINE_X0);	\
          SIS_WQINDEX(1) = (CARD32)(((y1)<<16) | (x1)); 		\
 	 SIS_WQINDEX(2) = (CARD32)(SISUSB_SPKC_HEADER + LINE_X1);	\
@@ -578,7 +578,7 @@
 #define SiSUSBSetupX0Y0(x,y) \
       { \
          CARD32 ttt = SiSUSBGetSwWP(); \
-	 pointer tt = (char *)pSiSUSB->cmdQueueBase + ttt; \
+         void *tt = (char *)pSiSUSB->cmdQueueBase + ttt; \
          SIS_WQINDEX(0) = (CARD32)(SISUSB_SPKC_HEADER + LINE_X0);	\
          SIS_WQINDEX(1) = (CARD32)(((y)<<16) | (x)); 		\
          SiSUSBNILandUpdateSWQueue \
@@ -587,7 +587,7 @@
 #define SiSUSBSetupX1Y1(x,y) \
       { \
          CARD32 ttt = SiSUSBGetSwWP(); \
-	 pointer tt = (char *)pSiSUSB->cmdQueueBase + ttt; \
+         void *tt = (char *)pSiSUSB->cmdQueueBase + ttt; \
          SIS_WQINDEX(0) = (CARD32)(SISUSB_SPKC_HEADER + LINE_X1);	\
          SIS_WQINDEX(1) = (CARD32)(((y)<<16) | (x)); 		\
          SiSUSBNILandUpdateSWQueue \
@@ -596,7 +596,7 @@
 #define SiSUSBSetupLineCountPeriod(c, p) \
       { \
          CARD32 ttt = SiSUSBGetSwWP(); \
-	 pointer tt = (char *)pSiSUSB->cmdQueueBase + ttt; \
+         void *tt = (char *)pSiSUSB->cmdQueueBase + ttt; \
          SIS_WQINDEX(0) = (CARD32)(SISUSB_SPKC_HEADER + LINE_COUNT);	\
          SIS_WQINDEX(1) = (CARD32)(((p) << 16) | (c)); 			\
          SiSUSBNILandUpdateSWQueue \
@@ -605,7 +605,7 @@
 #define SiSUSBSetupStyle(ls,hs) \
       { \
          CARD32 ttt = SiSUSBGetSwWP(); \
-	 pointer tt = (char *)pSiSUSB->cmdQueueBase + ttt; \
+         void *tt = (char *)pSiSUSB->cmdQueueBase + ttt; \
          SIS_WQINDEX(0) = (CARD32)(SISUSB_SPKC_HEADER + LINE_STYLE_0);	\
          SIS_WQINDEX(1) = (CARD32)(ls);					\
 	 SIS_WQINDEX(2) = (CARD32)(SISUSB_SPKC_HEADER + LINE_STYLE_1);	\
@@ -619,7 +619,7 @@
 #define SiSUSBSetupYHLR(y,h,left,right) \
       { \
          CARD32 ttt = SiSUSBGetSwWP(); \
-	 pointer tt = (char *)pSiSUSB->cmdQueueBase + ttt; \
+         void *tt = (char *)pSiSUSB->cmdQueueBase + ttt; \
          SIS_WQINDEX(0) = (CARD32)(SISUSB_SPKC_HEADER + TRAP_YH);	\
          SIS_WQINDEX(1) = (CARD32)(((y)<<16) | (h)); 		\
 	 SIS_WQINDEX(2) = (CARD32)(SISUSB_SPKC_HEADER + TRAP_LR);	\
@@ -632,7 +632,7 @@
 #define SiSUSBSetupdLdR(dxL,dyL,fxR,dyR) \
       { \
          CARD32 ttt = SiSUSBGetSwWP(); \
-	 pointer tt = (char *)pSiSUSB->cmdQueueBase + ttt; \
+         void *tt = (char *)pSiSUSB->cmdQueueBase + ttt; \
          SIS_WQINDEX(0) = (CARD32)(SISUSB_SPKC_HEADER + TRAP_DL);	\
          SIS_WQINDEX(1) = (CARD32)(((dyL)<<16) | (dxL)); 	\
 	 SIS_WQINDEX(2) = (CARD32)(SISUSB_SPKC_HEADER + TRAP_DR);	\
@@ -644,7 +644,7 @@
 #define SiSUSBSetupELER(eL,eR) \
       { \
          CARD32 ttt = SiSUSBGetSwWP(); \
-	 pointer tt = (char *)pSiSUSB->cmdQueueBase + ttt; \
+         void *tt = (char *)pSiSUSB->cmdQueueBase + ttt; \
          SIS_WQINDEX(0) = (CARD32)(SISUSB_SPKC_HEADER + TRAP_EL);	\
          SIS_WQINDEX(1) = (CARD32)(eL);	 			\
 	 SIS_WQINDEX(2) = (CARD32)(SISUSB_SPKC_HEADER + TRAP_ER);	\
@@ -658,7 +658,7 @@
 #define SiSUSBSetupAlpha(alpha) \
       { \
          CARD32 ttt = SiSUSBGetSwWP(); \
-	 pointer tt = (char *)pSiSUSB->cmdQueueBase + ttt; \
+         void *tt = (char *)pSiSUSB->cmdQueueBase + ttt; \
          SIS_WQINDEX(0) = (CARD32)(SISUSB_SPKC_HEADER + ALPHA_ALPHA);	\
          SIS_WQINDEX(1) = (CARD32)(alpha);	 			\
          SiSUSBNILandUpdateSWQueue \
@@ -667,7 +667,7 @@
 #define SiSUSBSetPattern(num, value) \
       { \
          CARD32 ttt = SiSUSBGetSwWP(); \
-	 pointer tt = (char *)pSiSUSB->cmdQueueBase + ttt; \
+         void *tt = (char *)pSiSUSB->cmdQueueBase + ttt; \
          SIS_WQINDEX(0) = (CARD32)(SISUSB_SPKC_HEADER + (PATTERN_REG + (num * 4)));	\
          SIS_WQINDEX(1) = (CARD32)(value); 						\
          SiSUSBNILandUpdateSWQueue \
@@ -676,7 +676,7 @@
 #define SiSUSBSetupPatternRegBurst(pat1, pat2, pat3, pat4) \
       { \
          CARD32 ttt = SiSUSBGetSwWP(); \
-	 pointer tt = (char *)pSiSUSB->cmdQueueBase + ttt; \
+         void *tt = (char *)pSiSUSB->cmdQueueBase + ttt; \
          SIS_WQINDEX(0) = (CARD32)(pat1);		\
          SIS_WQINDEX(1) = (CARD32)(pat2);		\
 	 SIS_WQINDEX(2) = (CARD32)(pat3);		\
@@ -719,7 +719,7 @@ typedef struct _SiSUSB_Packet12_YUV {
 #define SiSUSBWritePacketPart(part1, part2, part3, part4) \
       { \
          CARD32 ttt = SiSUSBGetSwWP(); \
-	 pointer tt = (char *)pSiSUSB->cmdQueueBase + ttt; \
+         void *tt = (char *)pSiSUSB->cmdQueueBase + ttt; \
          SIS_WQINDEX(0) = (CARD32)(part1);	\
          SIS_WQINDEX(1) = (CARD32)(part2);	\
 	 SIS_WQINDEX(2) = (CARD32)(part3);	\

@@ -78,7 +78,7 @@ static Bool	SISUSBCloseScreen(ScreenPtr pScreen);
 static Bool	SISUSBSaveScreen(ScreenPtr pScreen, int mode);
 static Bool	SISUSBSwitchMode(ScrnInfoPtr pScrn, DisplayModePtr mode);
 static void	SISUSBAdjustFrame(ScrnInfoPtr pScrn, int x, int y);
-static Bool	SISUSBDriverFunc(ScrnInfoPtr pScrn, xorgDriverFuncOp op, pointer p);
+static Bool	SISUSBDriverFunc(ScrnInfoPtr pScrn, xorgDriverFuncOp op, void *p);
 
 /* Optional functions */
 static void       SISUSBFreeScreen(ScrnInfoPtr pScrn);

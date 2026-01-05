@@ -370,7 +370,7 @@ SISUSBSetupImageVideo(ScreenPtr pScreen)
 
     set_allowswitchcrt(pSiSUSB, pPriv);
 
-    adapt->pPortPrivates[0].ptr = (pointer)(pPriv);
+    adapt->pPortPrivates[0].ptr = pPriv;
 
     adapt->nImages = NUM_IMAGES_315;
     adapt->pAttributes = SISUSBAttributes_315;
@@ -526,7 +526,7 @@ SISUSBSetupImageVideo(ScreenPtr pScreen)
 
 static int
 SISUSBSetPortAttribute(ScrnInfoPtr pScrn, Atom attribute,
-  		    INT32 value, pointer data)
+  		    INT32 value, void *data)
 {
   SISUSBPortPrivPtr pPriv = (SISUSBPortPrivPtr)data;
   SISUSBPtr pSiSUSB = SISUSBPTR(pScrn);
@@ -630,7 +630,7 @@ SISUSBGetPortAttribute(
   ScrnInfoPtr pScrn,
   Atom attribute,
   INT32 *value,
-  pointer data
+  void *data
 ){
   SISUSBPortPrivPtr pPriv = (SISUSBPortPrivPtr)data;
   SISUSBPtr pSiSUSB = SISUSBPTR(pScrn);
@@ -692,7 +692,7 @@ SISUSBQueryBestSize(
   short vid_w, short vid_h,
   short drw_w, short drw_h,
   unsigned int *p_w, unsigned int *p_h,
-  pointer data
+  void *data
 ){
   *p_w = drw_w;
   *p_h = drw_h;
@@ -1415,7 +1415,7 @@ SISUSBFreeOverlayMemory(ScrnInfoPtr pScrn)
 #endif
 
 static void
-SISUSBStopVideo(ScrnInfoPtr pScrn, pointer data, Bool shutdown)
+SISUSBStopVideo(ScrnInfoPtr pScrn, void *data, Bool shutdown)
 {
 #ifdef SIS_ENABLEXV
   SISUSBPortPrivPtr pPriv = (SISUSBPortPrivPtr)data;
@@ -1454,7 +1454,7 @@ SISUSBPutImage(
   int id, UChar *buf,
   short width, short height,
   Bool sync,
-  RegionPtr clipBoxes, pointer data,
+  RegionPtr clipBoxes, void *data,
   DrawablePtr pDraw
 ){
    SISUSBPtr pSiSUSB = SISUSBPTR(pScrn);
@@ -1693,7 +1693,7 @@ SISUSBAllocSurface(
     surface->id      = id;
     surface->pitches = &pPriv->pitch;
     surface->offsets = &pPriv->offset;
-    surface->devPrivate.ptr = (pointer)pPriv;
+    surface->devPrivate.ptr = pPriv;
 
     close_overlay(pSiSUSB, pPriv);
     pPriv->videoStatus = 0;
@@ -1739,7 +1739,7 @@ SISUSBGetSurfaceAttribute(
 {
     SISUSBPortPrivPtr pPriv = GET_PORT_PRIVATE(pScrn);
 
-    return SISUSBGetPortAttribute(pScrn, attribute, value, (pointer)pPriv);
+    return SISUSBGetPortAttribute(pScrn, attribute, value, pPriv);
 }
 
 static int
@@ -1751,7 +1751,7 @@ SISUSBSetSurfaceAttribute(
 {
     SISUSBPortPrivPtr pPriv = GET_PORT_PRIVATE(pScrn);;
 
-    return SISUSBSetPortAttribute(pScrn, attribute, value, (pointer)pPriv);
+    return SISUSBSetPortAttribute(pScrn, attribute, value, pPriv);
 }
 
 static int
