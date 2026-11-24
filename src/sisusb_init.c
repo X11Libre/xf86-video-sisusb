@@ -752,17 +752,13 @@ SiS_SetCRT1ModeRegs(SiS_Private *SiS_Pr, USHORT ModeNo, USHORT ModeIdIndex,
 			USHORT RefreshRateTableIndex)
 {
   USHORT data,infoflag=0,modeflag;
-  USHORT resindex,xres;
 
   if(SiS_Pr->UseCustomMode) {
      modeflag = SiS_Pr->CModeFlag;
      infoflag = SiS_Pr->CInfoFlag;
-     xres = SiS_Pr->CHDisplay;
   } else {
-     resindex = SiS_Pr->SiS_EModeIDTable[ModeIdIndex].Ext_RESINFO;
      modeflag = SiS_Pr->SiS_EModeIDTable[ModeIdIndex].Ext_ModeFlag;
      infoflag = SiS_Pr->SiS_RefIndex[RefreshRateTableIndex].Ext_InfoFlag;
-     xres = SiS_Pr->SiS_ModeResInfo[resindex].HTotal;
   }
 
   /* Disable DPMS */
@@ -1275,6 +1271,7 @@ SiSUSBBuildBuiltInModeList(ScrnInfoPtr pScrn, BOOLEAN includelcdmodes, BOOLEAN i
    int            A, B, C, D, E, F, temp, i, j, index, vclkindex;
    DisplayModePtr new = NULL, current = NULL, first = NULL;
    BOOLEAN        IsHDCLK;
+   char           *name;
 
    pSiSUSB->backupmodelist = NULL;
 
@@ -1292,10 +1289,11 @@ SiSUSBBuildBuiltInModeList(ScrnInfoPtr pScrn, BOOLEAN includelcdmodes, BOOLEAN i
 
       if(!(new = malloc(sizeof(DisplayModeRec)))) return first;
       memset(new, 0, sizeof(DisplayModeRec));
-      if(!(new->name = malloc(10))) {
+      if(!(name = malloc(12))) {
       	 free(new);
 	 return first;
       }
+      new->name = name;
       if(!first) first = new;
       if(current) {
          current->next = new;
@@ -1304,7 +1302,7 @@ SiSUSBBuildBuiltInModeList(ScrnInfoPtr pScrn, BOOLEAN includelcdmodes, BOOLEAN i
 
       current = new;
 
-      sprintf(current->name, "%dx%d", pSiSUSB->SiS_Pr->SiS_RefIndex[i].XRes,
+      sprintf(name, "%dx%d", pSiSUSB->SiS_Pr->SiS_RefIndex[i].XRes,
                                       pSiSUSB->SiS_Pr->SiS_RefIndex[i].YRes);
 
       current->status = MODE_OK;

@@ -169,8 +169,11 @@ SiSUSB_EvalOneOrThreeFloats(ScrnInfoPtr pScrn, int token, const char *myerror,
        }
     }
     if(!valid) {
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wformat-nonliteral"
        xf86DrvMsg(pScrn->scrnIndex, X_WARNING, myerror,
                   pSiSUSB->Options[SiSUSB_FIFT(pSiSUSB->Options, token)].name);
+#pragma GCC diagnostic pop
     }
     return (valid);
 }
@@ -199,8 +202,11 @@ SiSUSB_EvalOneOrThreeFloats2(ScrnInfoPtr pScrn, int token, const char *myerror,
        }
     }
     if(!valid) {
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wformat-nonliteral"
        xf86DrvMsg(pScrn->scrnIndex, X_WARNING, myerror,
                   pSiSUSB->Options[SiSUSB_FIFT(pSiSUSB->Options, token)].name);
+#pragma GCC diagnostic pop
     }
     return (valid);
 }

@@ -259,14 +259,14 @@ extern void	SISUSBSetPortDefaults(ScrnInfoPtr pScrn, SISUSBPortPrivPtr pPriv);
  ***********************************/
 
 static void
-sisutil_prepare_string(xSiSCtrlCommandReply *sdcbuf, char *mystring)
+sisutil_prepare_string(xSiSCtrlCommandReply *sdcbuf, const char *mystring)
 {
    int slen = 0;
    sdcbuf->sdc_buffer[0] = 0;
    if(mystring) {
       slen = strlen(mystring);
       if(slen > 31) slen = 31;
-      strncpy(&sdcbuf->sdc_buffer[0], mystring, slen);
+      memcpy(&sdcbuf->sdc_buffer[0], mystring, slen);
       sdcbuf->sdc_buffer[slen] = 0;
    }
    sdcbuf->sdc_result[0] = slen;
@@ -425,10 +425,10 @@ SiSHandleSiSDirectCommand(xSiSCtrlCommandReply *sdcbuf)
 
    case SDC_CMD_GETGAMMASTATUS:
       {
-         int i = 0;
-	 if(pSiSUSB->CRT1gamma) i |= 0x01;
-	 if(pSiSUSB->XvGamma)   i |= 0x04;
-         sdcbuf->sdc_result[0] = i;
+         int status = 0;
+	 if(pSiSUSB->CRT1gamma) status |= 0x01;
+	 if(pSiSUSB->XvGamma)   status |= 0x04;
+         sdcbuf->sdc_result[0] = status;
       }
       break;
 
@@ -775,7 +775,6 @@ static int
 SiSUSBProcSiSCtrlQueryVersion(ClientPtr client)
 {
     xSiSCtrlQueryVersionReply	  rep;
-    register int		  n;
 
     REQUEST_SIZE_MATCH(xSiSCtrlQueryVersionReq);
     rep.type = X_Reply;
@@ -800,7 +799,6 @@ SiSUSBProcSiSCtrlCommand(ClientPtr client)
     xSiSCtrlCommandReply rep;
     ExtensionEntry 	 *myext;
     xSiSCtrlScreenTable  *myctrl;
-    register int	 n;
     int 		 i, ret;
 
     REQUEST_SIZE_MATCH(xSiSCtrlCommandReq);
@@ -863,7 +861,6 @@ static int
 SiSUSBSProcSiSCtrlQueryVersion(ClientPtr client)
 {
     REQUEST(xSiSCtrlQueryVersionReq);
-    register int n;
     swaps(&stuff->length);
     REQUEST_SIZE_MATCH(xSiSCtrlQueryVersionReq);
     return SiSUSBProcSiSCtrlQueryVersion(client);
@@ -873,7 +870,6 @@ static int
 SiSUSBSProcSiSCtrlCommand(ClientPtr client)
 {
     REQUEST(xSiSCtrlCommandReq);
-    register int n;
     int i;
     swaps(&stuff->length);
     swapl(&stuff->screen);

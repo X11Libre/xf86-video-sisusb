@@ -174,7 +174,7 @@ SISUSBFreeRec(ScrnInfoPtr pScrn)
     }
 
     if(pScrn->chipset) {
-       free(pScrn->chipset);
+       free((void *)pScrn->chipset);
        pScrn->chipset = NULL;
     }
 
@@ -201,7 +201,7 @@ SiSUSBFindDuplicate(int myminor, int *minorArray, int numDevSections)
 }
 
 static int
-SiSUSBCheckForUSBDongle(char *filename, SISUSBPtr pSiSUSB, int *filehandle)
+SiSUSBCheckForUSBDongle(const char *filename, SISUSBPtr pSiSUSB, int *filehandle)
 {
     int retval = -1, myfile, dontclose = 0;
     unsigned int sisusbversion;
@@ -256,7 +256,7 @@ static int
 SiSUSBFindUSBDongle(GDevPtr dev, int *minorArray, int numDevSections, char **nameptr)
 {
     int i, retval = -1, gotdev = 0;
-    char *p;
+    const char *p;
 
     *nameptr = NULL;
 
@@ -289,7 +289,7 @@ SiSUSBFindUSBDongle(GDevPtr dev, int *minorArray, int numDevSections, char **nam
        *nameptr = malloc(32);
        for(i = 0; i < 64; i++) {
           if(i < 32) sprintf(*nameptr, "/dev/sisusbvga%d", i);
-	  else       sprintf(*nameptr, "/dev/usb/sisusbvga%d", i);
+	  else       sprintf(*nameptr, "/dev/usb/sisusbvga%d", i - 32);
           if((retval = SiSUSBCheckForUSBDongle(*nameptr, NULL, NULL)) >= 0) {
 	     if(!SiSUSBFindDuplicate(retval, minorArray, numDevSections)) {
 	        break;
@@ -706,7 +706,8 @@ SISUSBPreInit(ScrnInfoPtr pScrn, int flags)
 {
     SISUSBPtr pSiSUSB;
     MessageType from;
-    UChar srlockReg, crlockReg;
+    /* the save only stores a lock it had to undo; default to unlocked */
+    UChar srlockReg = 0xA1, crlockReg = 0;
     unsigned int i;
     int pix24flags;
     ClockRangePtr clockRanges;
@@ -775,7 +776,7 @@ SISUSBPreInit(ScrnInfoPtr pScrn, int flags)
     pSiSUSB->timeout = 0;
 
     if(SiSUSBCheckForUSBDongle(pScrn->chipset, pSiSUSB, &pSiSUSB->sisusbdev) < 0) {
-       SISUSBErrorLog(pScrn, "Failed to open %d for read/write\n", pScrn->chipset);
+       SISUSBErrorLog(pScrn, "Failed to open %s for read/write\n", pScrn->chipset);
        SISUSBFreeRec(pScrn);
        return FALSE;
     }
@@ -827,17 +828,17 @@ SISUSBPreInit(ScrnInfoPtr pScrn, int flags)
     {
 
        sisusbfb_info *mysisfbinfo = NULL;
-       CARD32     sisfbinfosize = 0, sisfbversion;
-       int        fd, i;
+       CARD32     sisfbinfosize = 0;
+       int        fd, fbnum;
        char       name[16];
 
-       i=0;
+       fbnum=0;
        do {
 
-	  if(i <= 7) {
-             sprintf(name, "/dev/fb%1d", i);
+	  if(fbnum <= 7) {
+             sprintf(name, "/dev/fb%1d", fbnum);
 	  } else {
-	     sprintf(name, "/dev/fb/%1d", i-8);
+	     sprintf(name, "/dev/fb/%1d", fbnum-8);
 	  }
 
           if((fd = open(name, O_RDONLY)) != -1) {
@@ -858,11 +859,6 @@ SISUSBPreInit(ScrnInfoPtr pScrn, int flags)
 	     if(gotit) {
 
 	        if(mysisfbinfo->sisusbfb_id == SISUSBFB_ID) {
-
-		   sisfbversion = (mysisfbinfo->sisusbfb_version << 16) |
-		                  (mysisfbinfo->sisusbfb_revision << 8) |
-			          (mysisfbinfo->sisusbfb_patchlevel);
-
 
 		   if(mysisfbinfo->sisusbfb_minor  == pSiSUSB->sisusb_minor) {
 
@@ -888,11 +884,11 @@ SISUSBPreInit(ScrnInfoPtr pScrn, int flags)
 	     }
 	     close (fd);
           }
-	  i++;
-       } while((i <= 15) && (!pSiSUSB->sisfbfound));
+	  fbnum++;
+       } while((fbnum <= 15) && (!pSiSUSB->sisfbfound));
 
        if(pSiSUSB->sisfbfound) {
-          strncpy(pSiSUSB->sisfbdevname, name, 15);
+          snprintf(pSiSUSB->sisfbdevname, sizeof(pSiSUSB->sisfbdevname), "%s", name);
        } else {
           xf86DrvMsg(pScrn->scrnIndex, X_PROBED, "sisusbfb not found\n");
        }
