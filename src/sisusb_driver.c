@@ -94,6 +94,10 @@ static XF86ModuleVersionInfo sisVersRec =
 
 _X_EXPORT XF86ModuleData sisusbModuleData = { &sisVersRec, sisusbSetup, NULL };
 
+#ifdef XF86_MODULE_VERSION_SUFFIX
+XF86_MODULE_VERSION_SUFFIX(sisusb, SISUSB_VERSION_SUFFIX);
+#endif
+
 void*
 sisusbSetup(void *module, void *opts, int *errmaj, int *errmin)
 {
