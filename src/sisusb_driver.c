@@ -775,7 +775,7 @@ SISUSBPreInit(ScrnInfoPtr pScrn, int flags)
     pSiSUSB->timeout = 0;
 
     if(SiSUSBCheckForUSBDongle(pScrn->chipset, pSiSUSB, &pSiSUSB->sisusbdev) < 0) {
-       SISUSBErrorLog(pScrn, "Failed to open %d for read/write\n", pScrn->chipset);
+       SISUSBErrorLog(pScrn, "Failed to open %s for read/write\n", pScrn->chipset);
        SISUSBFreeRec(pScrn);
        return FALSE;
     }
