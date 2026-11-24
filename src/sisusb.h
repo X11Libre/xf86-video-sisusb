@@ -29,7 +29,7 @@
  *
  */
 
-#ifndef _SISUSB_H
+#ifndef _SISUSB_H_
 #define _SISUSB_H_
 
 #include <sys/types.h>
