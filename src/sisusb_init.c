@@ -1271,6 +1271,7 @@ SiSUSBBuildBuiltInModeList(ScrnInfoPtr pScrn, BOOLEAN includelcdmodes, BOOLEAN i
    int            A, B, C, D, E, F, temp, i, j, index, vclkindex;
    DisplayModePtr new = NULL, current = NULL, first = NULL;
    BOOLEAN        IsHDCLK;
+   char           *name;
 
    pSiSUSB->backupmodelist = NULL;
 
@@ -1288,10 +1289,11 @@ SiSUSBBuildBuiltInModeList(ScrnInfoPtr pScrn, BOOLEAN includelcdmodes, BOOLEAN i
 
       if(!(new = malloc(sizeof(DisplayModeRec)))) return first;
       memset(new, 0, sizeof(DisplayModeRec));
-      if(!(new->name = malloc(10))) {
+      if(!(name = malloc(10))) {
       	 free(new);
 	 return first;
       }
+      new->name = name;
       if(!first) first = new;
       if(current) {
          current->next = new;
@@ -1300,7 +1302,7 @@ SiSUSBBuildBuiltInModeList(ScrnInfoPtr pScrn, BOOLEAN includelcdmodes, BOOLEAN i
 
       current = new;
 
-      sprintf(current->name, "%dx%d", pSiSUSB->SiS_Pr->SiS_RefIndex[i].XRes,
+      sprintf(name, "%dx%d", pSiSUSB->SiS_Pr->SiS_RefIndex[i].XRes,
                                       pSiSUSB->SiS_Pr->SiS_RefIndex[i].YRes);
 
       current->status = MODE_OK;

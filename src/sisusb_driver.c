@@ -174,7 +174,7 @@ SISUSBFreeRec(ScrnInfoPtr pScrn)
     }
 
     if(pScrn->chipset) {
-       free(pScrn->chipset);
+       free((void *)pScrn->chipset);
        pScrn->chipset = NULL;
     }
 
@@ -201,7 +201,7 @@ SiSUSBFindDuplicate(int myminor, int *minorArray, int numDevSections)
 }
 
 static int
-SiSUSBCheckForUSBDongle(char *filename, SISUSBPtr pSiSUSB, int *filehandle)
+SiSUSBCheckForUSBDongle(const char *filename, SISUSBPtr pSiSUSB, int *filehandle)
 {
     int retval = -1, myfile, dontclose = 0;
     unsigned int sisusbversion;
@@ -256,7 +256,7 @@ static int
 SiSUSBFindUSBDongle(GDevPtr dev, int *minorArray, int numDevSections, char **nameptr)
 {
     int i, retval = -1, gotdev = 0;
-    char *p;
+    const char *p;
 
     *nameptr = NULL;
 
