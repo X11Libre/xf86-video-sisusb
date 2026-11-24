@@ -748,7 +748,8 @@ void orSISREG(SISUSBPtr pSiSUSB, ULong base, UChar val)
     if(pSiSUSB->sisusbfatalerror) return;
     do {
        lseek(pSiSUSB->sisusbdev, base, SEEK_SET);
-       read(pSiSUSB->sisusbdev, &tmp, 1);
+       num = read(pSiSUSB->sisusbdev, &tmp, 1);
+       if(num != 1) continue;
        tmp |= val;
        lseek(pSiSUSB->sisusbdev, base, SEEK_SET);
        num = write(pSiSUSB->sisusbdev, &tmp, 1);
@@ -763,7 +764,8 @@ void andSISREG(SISUSBPtr pSiSUSB, ULong base, UChar val)
     if(pSiSUSB->sisusbfatalerror) return;
     do {
        lseek(pSiSUSB->sisusbdev, base, SEEK_SET);
-       read(pSiSUSB->sisusbdev, &tmp, 1);
+       num = read(pSiSUSB->sisusbdev, &tmp, 1);
+       if(num != 1) continue;
        tmp &= val;
        lseek(pSiSUSB->sisusbdev, base, SEEK_SET);
        num = write(pSiSUSB->sisusbdev, &tmp, 1);
