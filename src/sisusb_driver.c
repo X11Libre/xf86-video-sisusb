@@ -888,7 +888,7 @@ SISUSBPreInit(ScrnInfoPtr pScrn, int flags)
        } while((fbnum <= 15) && (!pSiSUSB->sisfbfound));
 
        if(pSiSUSB->sisfbfound) {
-          strncpy(pSiSUSB->sisfbdevname, name, 15);
+          snprintf(pSiSUSB->sisfbdevname, sizeof(pSiSUSB->sisfbdevname), "%s", name);
        } else {
           xf86DrvMsg(pScrn->scrnIndex, X_PROBED, "sisusbfb not found\n");
        }
