@@ -829,16 +829,16 @@ SISUSBPreInit(ScrnInfoPtr pScrn, int flags)
 
        sisusbfb_info *mysisfbinfo = NULL;
        CARD32     sisfbinfosize = 0;
-       int        fd, i;
+       int        fd, fbnum;
        char       name[16];
 
-       i=0;
+       fbnum=0;
        do {
 
-	  if(i <= 7) {
-             sprintf(name, "/dev/fb%1d", i);
+	  if(fbnum <= 7) {
+             sprintf(name, "/dev/fb%1d", fbnum);
 	  } else {
-	     sprintf(name, "/dev/fb/%1d", i-8);
+	     sprintf(name, "/dev/fb/%1d", fbnum-8);
 	  }
 
           if((fd = open(name, O_RDONLY)) != -1) {
@@ -884,8 +884,8 @@ SISUSBPreInit(ScrnInfoPtr pScrn, int flags)
 	     }
 	     close (fd);
           }
-	  i++;
-       } while((i <= 15) && (!pSiSUSB->sisfbfound));
+	  fbnum++;
+       } while((fbnum <= 15) && (!pSiSUSB->sisfbfound));
 
        if(pSiSUSB->sisfbfound) {
           strncpy(pSiSUSB->sisfbdevname, name, 15);

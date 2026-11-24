@@ -425,10 +425,10 @@ SiSHandleSiSDirectCommand(xSiSCtrlCommandReply *sdcbuf)
 
    case SDC_CMD_GETGAMMASTATUS:
       {
-         int i = 0;
-	 if(pSiSUSB->CRT1gamma) i |= 0x01;
-	 if(pSiSUSB->XvGamma)   i |= 0x04;
-         sdcbuf->sdc_result[0] = i;
+         int status = 0;
+	 if(pSiSUSB->CRT1gamma) status |= 0x01;
+	 if(pSiSUSB->XvGamma)   status |= 0x04;
+         sdcbuf->sdc_result[0] = status;
       }
       break;
 
