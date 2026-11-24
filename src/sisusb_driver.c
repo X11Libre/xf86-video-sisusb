@@ -706,7 +706,8 @@ SISUSBPreInit(ScrnInfoPtr pScrn, int flags)
 {
     SISUSBPtr pSiSUSB;
     MessageType from;
-    UChar srlockReg, crlockReg;
+    /* the save only stores a lock it had to undo; default to unlocked */
+    UChar srlockReg = 0xA1, crlockReg = 0;
     unsigned int i;
     int pix24flags;
     ClockRangePtr clockRanges;
