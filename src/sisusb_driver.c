@@ -289,7 +289,7 @@ SiSUSBFindUSBDongle(GDevPtr dev, int *minorArray, int numDevSections, char **nam
        *nameptr = malloc(32);
        for(i = 0; i < 64; i++) {
           if(i < 32) sprintf(*nameptr, "/dev/sisusbvga%d", i);
-	  else       sprintf(*nameptr, "/dev/usb/sisusbvga%d", i);
+	  else       sprintf(*nameptr, "/dev/usb/sisusbvga%d", i - 32);
           if((retval = SiSUSBCheckForUSBDongle(*nameptr, NULL, NULL)) >= 0) {
 	     if(!SiSUSBFindDuplicate(retval, minorArray, numDevSections)) {
 	        break;
