@@ -145,7 +145,9 @@ SiSUSBLoadCursorImage(ScrnInfoPtr pScrn, UChar *src)
     }
 
     sisusbSetCursorAddress(cursor_addr);
-    if(status1) sisusbSetCursorStatus(status1)
+    if(status1) {
+       sisusbSetCursorStatus(status1)
+    }
 
     pSiSUSB->UseHWARGBCursor = FALSE;
 }
@@ -246,7 +248,9 @@ static void SiSUSBLoadCursorImageARGB(ScrnInfoPtr pScrn, CursorPtr pCurs)
     }
 
     sisusbSetCursorAddress(cursor_addr);
-    if(status1) sisusbSetCursorStatus(status1)
+    if(status1) {
+       sisusbSetCursorStatus(status1)
+    }
 
     pSiSUSB->UseHWARGBCursor = TRUE;
 }
